@@ -55,9 +55,15 @@ app.get('/movies', async (req, res, next) => {
     }
     const movieData = moviedbURL.data.results.slice(0, 20);
 
-    const flix =  new Movies(movieData);
+    const movieArray = movieData.map(movie =>
+      new Movies({
+        title: movie.title,
+        release_date: movie.release_date,
+        overview: movie.overview,
+       
+      }));
     console.log(movieData);
-    res.status(200).send(flix);
+    res.status(200).send(movieArray);
   }
   catch(error){
     next(error);
